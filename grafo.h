@@ -35,6 +35,36 @@ public:
         cout << "Centro medico agregado correctamente: " << nombre << endl;
     }
 
+        // Agregar una ruta entre dos centros medicos
+    void agregarRuta(string idOrigen, string idDestino, double distancia, string tipoRuta, bool estadoRuta = true) {
+        Vertice *origen = buscarVertice(idOrigen);
+        Vertice *destino = buscarVertice(idDestino);
+
+        if (origen == nullptr || destino == nullptr) {
+            cout << "Error: uno o ambos centros no existen.\n";
+            return;
+        }
+
+        // Crear la nueva arista (ruta)
+        Arista *nueva = new Arista(destino, distancia, tipoRuta, estadoRuta);
+
+        // Si el origen no tiene rutas aún
+        if (origen->ari == nullptr) {
+            origen->ari = nueva;
+        } else {
+            // Ir hasta el final de la lista de rutas del origen
+            Arista *aux = origen->ari;
+            while (aux->sig != nullptr)
+                aux = aux->sig;
+            aux->sig = nueva;
+        }
+
+        cout << "Ruta agregada: " << origen->nombreCentro << " -> "
+             << destino->nombreCentro << " (" << distancia << " km, tipo: "
+             << tipoRuta << ")\n";
+    }
+
+
     Vertice* buscarVertice(string id) {
         Vertice *aux = primero;
         while (aux != nullptr) {
@@ -91,6 +121,46 @@ public:
         delete actual;
         cout << "Centro medico eliminado correctamente.\n";
     }
+
+        // Eliminar una ruta entre dos centros medicos
+    void eliminarRuta(string idOrigen, string idDestino) {
+        Vertice *origen = buscarVertice(idOrigen);
+        Vertice *destino = buscarVertice(idDestino);
+
+        if (origen == nullptr || destino == nullptr) {
+            cout << "Error: uno o ambos centros no existen.\n";
+            return;
+        }
+
+        if (origen->ari == nullptr) {
+            cout << "El centro origen no tiene rutas registradas.\n";
+            return;
+        }
+
+        Arista *actual = origen->ari;
+        Arista *anterior = nullptr;
+
+        // Buscar la arista que conecta origen -> destino
+        while (actual != nullptr && actual->getDestino() != destino) {
+            anterior = actual;
+            actual = actual->sig;
+        }
+
+        if (actual == nullptr) {
+            cout << "No se encontró una ruta entre " << idOrigen << " y " << idDestino << ".\n";
+            return;
+        }
+
+        // Eliminar la arista encontrada
+        if (anterior == nullptr)
+            origen->ari = actual->sig;
+        else
+            anterior->sig = actual->sig;
+
+        delete actual;
+        cout << "Ruta eliminada correctamente: " << idOrigen << " -> " << idDestino << endl;
+    }
+
 
     void mostrarCentros() {
         if (estaVacio()) {
