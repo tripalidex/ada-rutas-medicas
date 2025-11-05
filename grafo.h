@@ -65,16 +65,19 @@ public:
     }
 
 
+    // Función buscarVertice
+    // Recorre la lista de vértices para localizar un centro médico por su ID.
+    // Devuelve el vértice encontrado o nullptr si no existe.
+    // Complejidad: O(v). Recorre toda la lista de vértices hasta encontrar coincidencias.
     Vertice* buscarVertice(string id) {
         Vertice *aux = primero;
-        while (aux != nullptr) {
+         while (aux != nullptr) {
             if (aux->idCentro == id)
                 return aux;
-            aux = aux->sig;
-        }
-        return nullptr;
+        aux = aux->sig;
     }
-
+    return nullptr;
+}
     void eliminarVertice(string id) {
         if (estaVacio()) {
             cout << "No hay centros para eliminar.\n";
