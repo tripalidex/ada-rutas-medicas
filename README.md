@@ -1,5 +1,6 @@
 # ada-rutas-medicas
-Actividad grupal de la semana 11 del curso Análisis y Diseño de Algoritmos
+Actividad grupal de la semana 12 del curso Análisis y Diseño de Algoritmos.
+https://github.com/tripalidex/ada-rutas-medicas.git
 
 ### Modulo: Nodos (Centros medicos) Participante: Juan Pablo Zavala Valle
 
